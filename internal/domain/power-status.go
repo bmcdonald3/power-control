@@ -367,6 +367,21 @@ func updateComponentMap() error {
 	return nil
 }
 
+func cleanFQDN(rawFQDN string) string {
+	if strings.HasPrefix(rawFQDN, "https://") {
+		return strings.TrimPrefix(rawFQDN, "https://")
+	}
+	if strings.HasPrefix(rawFQDN, "http://") {
+		return strings.TrimPrefix(rawFQDN, "http://")
+	}
+
+	u, err := url.Parse(rawFQDN)
+	if err == nil && u.Host != "" {
+		return u.Host
+	}
+	return rawFQDN
+}
+
 // Check the comp map and populate the creds of any entries that have no
 // cred info.  If a previous RF access failed due to bad creds, those creds
 // will be deleted from the HW map entry, causing them to get re-populated
