@@ -250,9 +250,7 @@ func GetPowerStatus(xnames []string,
 				case xnametypes.MgmtSwitch:    fallthrough
 				case xnametypes.MgmtHLSwitch:  fallthrough
 				case xnametypes.CDUMgmtSwitch: fallthrough
-				case xnametypes.CabinetPDUPowerConnector:
-					pcomp.Error = "Component not found in component map."
-
+				case xnametypes.CabinetPDUPowerConnector: fallthrough
 				case xnametypes.HMSTypeInvalid:
 					pcomp.Error = "Invalid component name."
 
