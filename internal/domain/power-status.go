@@ -352,12 +352,29 @@ func updateComponentMap() error {
 					newComp.PSComp.PowerState = pcsmodel.PowerStateFilter_Undefined.String()
 					newComp.PSComp.ManagementState = pcsmodel.ManagementStateFilter_unavailable.String()
 					newComp.PSComp.SupportedPowerTransitions = toPCSPowerActions(v.AllowableActions)
-					newComp.HSMData.RfFQDN = v.RfFQDN
+
+					cleanedFQDN := cleanFQDN(v.RfFQDN)
+					newComp.HSMData.RfFQDN = cleanedFQDN
+					glogger.Debugf("%s: For %s, raw RfFQDN: '%s', cleaned RfFQDN: '%s'", fname, v.BaseData.ID, v.RfFQDN, cleanedFQDN)
+					
 					newComp.HSMData.PowerStatusURI = v.PowerStatusURI
 					newComp.HSMData.PowerActionURI = v.PowerActionURI
 					newComp.HSMData.PowerCapURI = v.PowerCapURI
 					newComp.PSComp.LastUpdated = time.Now().Format(time.RFC3339)
 					hwStateMap[v.BaseData.ID] = &newComp
+				} else {
+					existingComp := hwStateMap[v.BaseData.ID]
+					cleanedFQDN := cleanFQDN(v.RfFQDN)
+					if existingComp.HSMData.RfFQDN != cleanedFQDN {
+						glogger.Infof("%s: Updating RfFQDN for %s from '%s' to '%s'", fname, v.BaseData.ID, existingComp.HSMData.RfFQDN, cleanedFQDN)
+						existingComp.HSMData.RfFQDN = cleanedFQDN
+					}
+					if existingComp.HSMData.PowerStatusURI != v.PowerStatusURI {
+						glogger.Infof("%s: Updating PowerStatusURI for %s", fname, v.BaseData.ID)
+						existingComp.HSMData.PowerStatusURI = v.PowerStatusURI
+					}
+					existingComp.PSComp.SupportedPowerTransitions = toPCSPowerActions(v.AllowableActions)
+					existingComp.PSComp.LastUpdated = time.Now().Format(time.RFC3339)
 				}
 			default:
 				glogger.Tracef("%s: Component type not handled: %s", fname, string(v.BaseData.Type))
