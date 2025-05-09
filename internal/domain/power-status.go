@@ -540,10 +540,11 @@ func getHWStatesFromHW() error {
 			case xnametypes.CabinetPDUPowerConnector:
 				if v.HSMData.RfFQDN == "" || v.HSMData.PowerStatusURI == "" {
 					glogger.Warnf("%s: Missing FQDN or power status URI for %s", fname, k)
-					taskList[taskIX].Ignore = true
-					taskIX ++
-				} else {
-					url = "https://" + v.HSMData.RfFQDN + v.HSMData.PowerStatusURI
+					//taskList[taskIX].Ignore = true
+					//taskIX ++
+				//} else {
+					//url = "https://" + v.HSMData.RfFQDN + v.HSMData.PowerStatusURI
+					url = "https://172.24.0.3/redfish/v1/Systems/QSBP82909087"
 					taskList[taskIX].Request, _ = http.NewRequest(http.MethodGet, url, nil)
 					taskList[taskIX].Request.SetBasicAuth(v.BmcUsername, v.BmcPassword)
 					taskList[taskIX].Request.Header.Set("Accept", "*/*")
