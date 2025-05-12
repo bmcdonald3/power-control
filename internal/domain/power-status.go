@@ -231,9 +231,9 @@ func GetPowerStatus(xnames []string,
 	           mgmtStateFilter == pcsmodel.ManagementStateFilter_undefined
 
 	for _, name := range xnames {
-		glogger.Warnf("CHECKING: %s", name)
 		stateMatch := true
 		mp, mapok := compMap[name]
+		glogger.Warnf("CHECKING: %s %v", name, mp)
 		if !mapok {
 			//Get the type.  If it has no support for power status, make the
 			//error message reflect that.  Otherwise give a generic error.
