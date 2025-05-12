@@ -230,6 +230,7 @@ func GetPowerStatus(xnames []string,
 	msUndef := mgmtStateFilter == pcsmodel.ManagementStateFilter_Nil ||
 	           mgmtStateFilter == pcsmodel.ManagementStateFilter_undefined
 
+	glogger.Warnf("Component map: %v", compMap)
 	for _, name := range xnames {
 		stateMatch := true
 		mp, mapok := compMap[name]
