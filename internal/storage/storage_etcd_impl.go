@@ -300,6 +300,9 @@ func (e *ETCDStorage) GetAllPowerStatus() (model.PowerStatus, error) {
 		for _, kv := range kvl {
 			var pcomp model.PowerStatusComponent
 			err = json.Unmarshal([]byte(kv.Value), &pcomp)
+
+			e.Logger.Warnf("PowerStatusComponent: %s %v", kv.Value, pcomp)
+
 			if err != nil {
 				e.Logger.Error(err)
 			} else {

@@ -214,6 +214,7 @@ func GetPowerStatus(xnames []string,
 	}
 
 	for ix, comp := range statusObj.Status {
+		glogger.Warnf("CHECKING: %s %v", comp.XName, comp)
 		compMap[comp.XName] = &statusObj.Status[ix]
 		if allComps {
 			xnames = append(xnames, comp.XName)
