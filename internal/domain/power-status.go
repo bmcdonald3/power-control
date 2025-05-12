@@ -253,7 +253,7 @@ func GetPowerStatus(xnames []string,
 				case xnametypes.CabinetPDUPowerConnector: fallthrough
 
 				case xnametypes.HMSTypeInvalid:
-					glogger.Warnf("FAILED: %s", name)
+					glogger.Warnf("FAILED: %s %v", name, htype)
 					pcomp.Error = "Invalid component name."
 
 				default:
