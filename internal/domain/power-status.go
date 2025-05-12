@@ -231,7 +231,7 @@ func GetPowerStatus(xnames []string,
 	           mgmtStateFilter == pcsmodel.ManagementStateFilter_undefined
 
 	for _, name := range xnames {
-		glogger.Warnf("CHECKING: ", name)
+		glogger.Warnf("CHECKING: %s", name)
 		stateMatch := true
 		mp, mapok := compMap[name]
 		if !mapok {
@@ -253,7 +253,7 @@ func GetPowerStatus(xnames []string,
 				case xnametypes.CabinetPDUPowerConnector: fallthrough
 
 				case xnametypes.HMSTypeInvalid:
-					glogger.Warnf("FAILED: ", name)
+					glogger.Warnf("FAILED: %s", name)
 					pcomp.Error = "Invalid component name."
 
 				default:
