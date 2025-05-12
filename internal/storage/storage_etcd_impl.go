@@ -293,6 +293,7 @@ func (e *ETCDStorage) GetPowerStatus(xname string) (model.PowerStatusComponent, 
 }
 
 func (e *ETCDStorage) GetAllPowerStatus() (model.PowerStatus, error) {
+	e.Logger.Error("IN ETCD FUNCTION")
 	var pstats model.PowerStatus
 	k := e.fixUpKey(keySegPowerState)
 	kvl, err := e.kvHandle.GetRange(k+keyMin, k+keyMax)
@@ -301,7 +302,7 @@ func (e *ETCDStorage) GetAllPowerStatus() (model.PowerStatus, error) {
 			var pcomp model.PowerStatusComponent
 			err = json.Unmarshal([]byte(kv.Value), &pcomp)
 
-			e.Logger.Warnf("PowerStatusComponent: %s %v", kv.Value, pcomp)
+			e.Logger.Error("PowerStatusComponent: %s %v", kv.Value, pcomp)
 
 			if err != nil {
 				e.Logger.Error(err)
